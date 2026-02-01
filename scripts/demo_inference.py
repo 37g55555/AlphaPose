@@ -42,7 +42,7 @@ parser.add_argument('--list', dest='inputlist',
 parser.add_argument('--image', dest='inputimg',
                     help='image-name', default="")
 parser.add_argument('--outdir', dest='outputpath',
-                    help='output-directory', default="examples/res/")
+                    help='output-directory', default="../data/ap_res/")
 parser.add_argument('--save_img', default=False, action='store_true',
                     help='save result as image')
 parser.add_argument('--vis', default=False, action='store_true',
@@ -274,6 +274,15 @@ if __name__ == "__main__":
             print('===========================> Rendering remaining ' + str(writer.count()) + ' images in the queue...', end='\r')
         writer.stop()
         det_loader.stop()
+
+        if mode == 'video':
+            old_path = os.path.join(args.outputpath, 'alphapose-results.json')
+            basename = os.path.splitext(os.path.basename(input_source))[0]
+            new_path = os.path.join(args.outputpath, f"{basename}.json")
+            if os.path.exists(new_path): os.remove(new_path)
+            os.rename(old_path, new_path)
+            print(f"Results saved to {new_path}")
+
     except Exception as e:
         print(repr(e))
         print('An error as above occurs when processing the images, please check it')
