@@ -160,12 +160,13 @@ def get_ext_modules():
 
 def get_install_requires():
     install_requires = [
-        'six', 'terminaltables', 'scipy',
-        'opencv-python', 'matplotlib', 'visdom',
-        'tqdm', 'tensorboardx', 'easydict',
+        'six', 'terminaltables', 'scipy<=1.7.3',
+        'opencv-python', 'matplotlib<=3.5.3', 'visdom',
+        'tqdm<4.50.0', 'tensorboardx', 'easydict',
         'pyyaml', 'halpecocotools',
         'torch>=1.1.0', 'torchvision>=0.3.0',
-        'munkres', 'timm==0.1.20', 'natsort'
+        'munkres', 'timm==0.1.20', 'natsort',
+        'packaging<22.0', 'pyparsing<3.0.0'
     ]
     # official pycocotools doesn't support Windows, we will install it by third-party git repository later
     if platform.system() != 'Windows':
@@ -206,7 +207,7 @@ if __name__ == '__main__':
         ],
         license='GPLv3',
         python_requires=">=3",
-        setup_requires=['pytest-runner', 'numpy', 'cython'],
+        setup_requires=['pytest-runner', 'numpy', 'cython', 'cppy', 'kiwisolver>=1.0.1'],
         tests_require=['pytest'],
         install_requires=get_install_requires(),
         ext_modules=get_ext_modules(),
